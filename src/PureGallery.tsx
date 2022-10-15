@@ -7,10 +7,12 @@ import {useStyletron} from 'baseui';
 
 interface PureGalleryI {
   images: string[] | null;
+  // Helper outside fn for resolve path to cdn
+  imageRoot?: (str: string) => string;
 }
 
 const Index: FC<PureGalleryI> = (props) => {
-  const {images = []} = props;
+  const {images = [], imageRoot} = props;
   const [css] = useStyletron();
 
   return (
@@ -21,7 +23,7 @@ const Index: FC<PureGalleryI> = (props) => {
         width: '100%'
       })}
     >
-      {isBrowser() && <GalleryWrapper images={images} />}
+      {isBrowser() && <GalleryWrapper imageRoot={imageRoot} images={images} />}
     </div>
   );
 };
