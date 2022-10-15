@@ -1,14 +1,18 @@
 import * as React from 'react';
 
 import {CarouselProvider, ImageWithZoom, Slide} from 'pure-react-carousel';
-import {imageRoot, isNullOrUndefined} from '@bipboys/ts-utils';
 
 import Gallery from './Gallery';
+import {isNullOrUndefined} from '@bipboys/ts-utils';
 import {useStyletron} from 'baseui';
 
-function GalleryWrapper(props: {images: string[] | null}) {
+function GalleryWrapper(props: {
+  images: string[] | null;
+  // Helper outside fn for resolve path to cdn
+  imageRoot?: (str: string) => string;
+}) {
   const [css, theme] = useStyletron();
-  const {images} = props;
+  const {images, imageRoot} = props;
 
   const imagesArray = images?.map((val, idx) => {
     return (
@@ -24,7 +28,7 @@ function GalleryWrapper(props: {images: string[] | null}) {
           imageClassName={css({
             backgroundPosition: 'center'
           })}
-          src={imageRoot(val)}
+          src={imageRoot ? imageRoot(val) : val}
         />
       </Slide>
     );

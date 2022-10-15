@@ -10,11 +10,15 @@ import {
 } from 'pure-react-carousel';
 import {ReactElement, useContext, useEffect, useRef, useState} from 'react';
 
-import {imageRoot} from '@bipboys/ts-utils';
 import {useStyletron} from 'baseui';
 
-function Gallery(props: {images: ReactElement[]; imagesSrc: string[]}) {
-  const {images, imagesSrc} = props;
+function Gallery(props: {
+  images: ReactElement[];
+  imagesSrc: string[];
+  // Helper outside fn for resolve path to cdn
+  imageRoot?: (str: string) => string;
+}) {
+  const {images, imagesSrc, imageRoot} = props;
   const [css, theme] = useStyletron();
 
   const carouselContext = useContext(CarouselContext);
@@ -44,8 +48,6 @@ function Gallery(props: {images: ReactElement[]; imagesSrc: string[]}) {
         className={css({
           position: 'relative',
           flex: '0 0 100%',
-          // boxShadow: theme.lighting.shallowBelow,
-          // borderRadius: '12px',
           boxSizing: 'border-box'
         })}
       >
@@ -164,7 +166,7 @@ function Gallery(props: {images: ReactElement[]; imagesSrc: string[]}) {
                     transition: 'opacity .5s',
                     boxSizing: 'border-box'
                   })}
-                  src={imageRoot(v)}
+                  src={imageRoot ? imageRoot(v) : v}
                 />
               </Dot>
             );
