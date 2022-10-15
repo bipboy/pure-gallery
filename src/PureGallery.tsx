@@ -5,11 +5,11 @@ import GalleryWrapper from './GalleryWrapper';
 import {isBrowser} from '@bipboys/ts-utils';
 import {useStyletron} from 'baseui';
 
-interface ProductGalleryI {
+interface PureGalleryI {
   images: string[] | null;
 }
 
-const Index: FC<ProductGalleryI> = (props) => {
+const Index: FC<PureGalleryI> = (props) => {
   const {images = []} = props;
   const [css] = useStyletron();
 
