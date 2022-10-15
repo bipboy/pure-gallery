@@ -58,7 +58,11 @@ function GalleryWrapper(props: {
           boxSizing: 'border-box'
         })}
       >
-        <Gallery imagesSrc={images} images={imagesArray} />
+        <Gallery
+          imageRoot={imageRoot}
+          imagesSrc={images}
+          images={imagesArray}
+        />
       </div>
     </CarouselProvider>
   );
