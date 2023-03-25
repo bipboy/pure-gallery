@@ -2,32 +2,25 @@ import * as React from 'react';
 
 import {CarouselProvider, ImageWithZoom, Slide} from 'pure-react-carousel';
 
-import Gallery from './Gallery';
+import {Gallery} from './Gallery';
 import {isNullOrUndefined} from '@bipboys/ts-utils';
-import {useStyletron} from 'baseui';
 
-function GalleryWrapper(props: {
+export function GalleryWrapper(props: {
   images: string[] | null;
   // Helper outside fn for resolve path to cdn
   imageRoot?: (str: string) => string;
 }) {
-  const [css, theme] = useStyletron();
   const {images, imageRoot} = props;
 
   const imagesArray = images?.map((val, idx) => {
     return (
       <Slide
-        className={css({
-          backgroundColor:
-            idx % 2 ? theme.colors.primary50 : theme.colors.primary100
-        })}
+        className={idx % 2 ? 'bg-white' : 'bg-gray-50'}
         key={idx}
         index={idx}
       >
         <ImageWithZoom
-          imageClassName={css({
-            backgroundPosition: 'center'
-          })}
+          imageClassName={'bg-center'}
           src={imageRoot ? imageRoot(val) : val}
         />
       </Slide>
@@ -40,10 +33,7 @@ function GalleryWrapper(props: {
 
   return (
     <CarouselProvider
-      className={css({
-        width: '100%',
-        boxSizing: 'border-box'
-      })}
+      className="w-full box-border"
       visibleSlides={2}
       totalSlides={imagesArray?.length}
       step={1}
@@ -51,13 +41,7 @@ function GalleryWrapper(props: {
       naturalSlideHeight={500}
       touchEnabled
     >
-      <div
-        className={css({
-          display: 'flex',
-          flexDirection: 'column',
-          boxSizing: 'border-box'
-        })}
-      >
+      <div className="flex flex-col box-border">
         <Gallery
           imageRoot={imageRoot}
           imagesSrc={images}
@@ -67,5 +51,3 @@ function GalleryWrapper(props: {
     </CarouselProvider>
   );
 }
-
-export default GalleryWrapper;

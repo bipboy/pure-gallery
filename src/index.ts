@@ -1,1 +1,1 @@
-export {default as PureGallery} from './PureGallery';
+export {PureGallery} from './PureGallery';
