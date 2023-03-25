@@ -12,7 +12,13 @@ import {useContext, useEffect, useRef, useState} from 'react';
 
 import classNames from 'classnames';
 
-export function Gallery(props) {
+interface GalleryProps {
+  images: React.Element[];
+  imagesSrc: string[];
+  imageRoot?: (str: string) => string;
+}
+
+export function Gallery(props: GalleryProps) {
   const {images, imagesSrc, imageRoot} = props;
   const carouselContext = useContext(CarouselContext);
   const [currentSlide, setCurrentSlide] = useState(
@@ -29,43 +35,56 @@ export function Gallery(props) {
     return () => carouselContext.unsubscribe(onChange);
   }, [carouselContext]);
 
+  const dotsContainerStyle = classNames(
+    'relative mt-2 flex flex-wrap gap-2 items-start justify-start'
+  );
+
   return (
     <>
       <div className="relative flex-grow-0 flex-shrink-0 w-full box-border">
         <Slider className="relative overflow-hidden">{images}</Slider>
-        <ButtonBack className="flex items-center justify-center h-10 w-10 rounded-full bg-white/50 hover:bg-white/75 transition-colors duration-300 ease-in-out absolute top-1/2 left-2 transform -translate-y-1/2 focus:outline-none">
-          <ArrowLeftIcon width="24px" className="text-primary" />
+        <ButtonBack
+          className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center justify-center h-12 w-12 rounded-full bg-white hover:bg-gray-300 active:bg-gray-400 transition-colors duration-300 border border-solid border-neutral-500"
+          style={{height: '3rem', width: '3rem', marginLeft: '-.5rem'}}
+        >
+          <ArrowLeftIcon width="20px" />
         </ButtonBack>
         <ButtonNext
-          className="flex items-center justify-center h-10 w-10 rounded-full bg-white/50 hover:bg-white/75 transition-colors duration-300 ease-in-out absolute top-1/2 right-2 transform -translate-y-1/2 focus:outline-none"
           disabled={currentSlide === images?.length - 1}
+          className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center justify-center h-12 w-12 rounded-full bg-white hover:bg-gray-300 active:bg-gray-400 transition-colors duration-300 border border-solid border-neutral-500"
+          style={{height: '3rem', width: '3rem', marginRight: '-.5rem'}}
         >
-          <ArrowRightIcon width="24px" className="text-primary" />
+          <ArrowRightIcon width="20px" />
         </ButtonNext>
       </div>
       <div className="relative mt-2 box-border">
-        <div
-          ref={dotsRef}
-          className="relative grid gap-2 grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] box-border transition-transform duration-500 ease-in-out overflow-x-hidden overflow-y-auto"
-          style={{transform: `translateY(-${currentSlide * 100}%)`}}
-        >
+        <div ref={dotsRef} className={dotsContainerStyle}>
           {imagesSrc?.map((v, idx) => {
-            const isActive = currentSlide === idx || currentSlide + 1 === idx;
+            const dotStyle = classNames(
+              'cursor-pointer border-0 outline-offset-[-4px] transition-opacity duration-300 bg-primary-50 overflow-hidden',
+              currentSlide === idx || currentSlide + 1 === idx
+                ? 'opacity-60'
+                : 'opacity-100'
+            );
+
+            const dotImageStyle = classNames(
+              'cursor-pointer transition-opacity duration-500 w-full h-full object-cover object-center',
+              currentSlide === idx || currentSlide + 1 === idx
+                ? 'opacity-60'
+                : 'opacity-100'
+            );
             return (
               <Dot
-                key={idx}
+                disabled={false}
+                className={dotStyle}
                 slide={idx}
-                className="cursor-pointer border-0 block outline-offset-[-4px] p-0 transition-opacity duration-300 ease-in-out box-border bg-primary-50 hover:opacity-60 max-w-[120px] max-h-[120px]"
+                key={idx}
+                style={{maxWidth: '64px', maxHeight: '64px'}}
               >
                 <img
-                  className={classNames(
-                    'cursor-pointer block transition-opacity duration-500 ease-in-out w-full h-full box-border',
-                    {
-                      'opacity-40': isActive,
-                      'opacity-100': !isActive
-                    }
-                  )}
+                  className={dotImageStyle}
                   src={imageRoot ? imageRoot(v) : v}
+                  style={{maxWidth: '64px', maxHeight: '64px'}}
                 />
               </Dot>
             );
