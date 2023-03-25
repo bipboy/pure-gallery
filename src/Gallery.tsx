@@ -44,15 +44,25 @@ export function Gallery(props: GalleryProps) {
       <div className="relative flex-grow-0 flex-shrink-0 w-full box-border">
         <Slider className="relative overflow-hidden">{images}</Slider>
         <ButtonBack
-          className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center justify-center h-12 w-12 rounded-full bg-white hover:bg-gray-300 active:bg-gray-400 transition-colors duration-300 border border-solid border-neutral-500"
-          style={{height: '3rem', width: '3rem', marginLeft: '-.5rem'}}
+          className="absolute top-1/2 left-0 transform -translate-y-1/2 flex items-center justify-center h-12 w-12 rounded-full bg-white hover:bg-gray-300 active:bg-gray-400 transition-colors duration-300"
+          style={{
+            height: '3rem',
+            width: '3rem',
+            marginLeft: '-.75rem',
+            border: '1px solid #656a7633'
+          }}
         >
           <ArrowLeftIcon width="20px" />
         </ButtonBack>
         <ButtonNext
           disabled={currentSlide === images?.length - 1}
-          className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center justify-center h-12 w-12 rounded-full bg-white hover:bg-gray-300 active:bg-gray-400 transition-colors duration-300 border border-solid border-neutral-500"
-          style={{height: '3rem', width: '3rem', marginRight: '-.5rem'}}
+          className="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center justify-center h-12 w-12 rounded-full bg-white hover:bg-gray-300 active:bg-gray-400 transition-colors duration-300"
+          style={{
+            height: '3rem',
+            width: '3rem',
+            marginRight: '-.75rem',
+            border: '1px solid #656a7633'
+          }}
         >
           <ArrowRightIcon width="20px" />
         </ButtonNext>
