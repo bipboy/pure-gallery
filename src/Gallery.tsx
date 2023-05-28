@@ -48,7 +48,7 @@ export function Gallery(props: GalleryProps) {
           style={{
             height: '3rem',
             width: '3rem',
-            marginLeft: '-.75rem',
+            top: '50%',
             border: '1px solid #656a7633'
           }}
         >
@@ -60,7 +60,7 @@ export function Gallery(props: GalleryProps) {
           style={{
             height: '3rem',
             width: '3rem',
-            marginRight: '-.75rem',
+            top: '50%',
             border: '1px solid #656a7633'
           }}
         >
